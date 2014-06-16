@@ -118,9 +118,33 @@ FB.getLoginStatus(function(response) {
  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
 
 
+function FacebookLogin() {
+    FB.login(function (e) {
+        if (e.authResponse) {
+            window.authToken = e.authResponse.accessToken;
+            window.location.reload()
+        }
+    }, {
+        scope: "user_likes,user_photos,publish_actions"
+    })
+}
 
-   
+function refreshPages() {
+    window.location.reload()
+}
 
+function getAlbum() {
+    $("#albumGET").remove();
+    FB.api("/me/albums", function (e) {
+        for (var t = 0; t < e.data.length; t++) {
+            var n = e.data[t].id;
+            var r = e.data[t].name;
+            var i = '<option id="albumID" value=' + n + ">" + r + "</option>";
+            $("#album").append(i);
+            $("#album").prop("selectedIndex", -1)
+        }
+    })
+}
 
 
 
