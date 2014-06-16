@@ -4,7 +4,7 @@ window.fbAsyncInit = function(){
 		xfbml	: true,
 		version	:'v2.0'
 		});
-	}
+	
 	
 	(function(d,s,id){
 		var js, fjs = d.getElementByTagName(s)[0];
@@ -19,16 +19,24 @@ window.fbAsyncInit = function(){
 FB.getLoginStatus(function(response) {
   if (response.status === 'connected') {
     //呼叫api把圖片放到#preview IMG tag 內
-    
+    window.authToken = e.authResponse.accessToken
   } else if (response.status === 'not_authorized') {
     //要求使用者登入，索取publish_actions權限
-	
+	 $("#main").html("<h1>Please authorized this apps</h1><h4> p/s: please allow browser popup for this website and refresh to use this apps</h4>");
+     $("#facebookname,#sentimg,label").remove();
+	FacebookLogin();
+     $(".info").append('<input type="button" value="Reload" onClick="refreshPages()>"')
   } else {
     //同樣要求使用者登入
+	$("#main").html("<h1>Please login to use this apps</h1><h4> p/s: please allow browser popup for this website and refresh to use this apps</h4>");
+    $("#facebookname,#sentimg,label").remove();
+    FacebookLogin()
   }
  });
+ 
+ $("#pattern").prop("selectedIndex", -1)
 
-
+};
 //以下為canvas的程式碼，基本上不需多動，依據comments修改即可
 	
 	//起始畫面
@@ -107,7 +115,7 @@ FB.getLoginStatus(function(response) {
 
 
 
-}; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
+ //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
 
 
 
