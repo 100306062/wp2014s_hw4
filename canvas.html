@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>HTML5 Canvas Demo</title>
+    <meta name="description" content=" ">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <style>
+    #canvas {
+        border: 3px solid grey;
+    }
+    </style>
+</head>
+
+<body>
+    <section id="main">
+        <h2>This is a HTML5 Canvas Demo Pages</h2>
+        <canvas width="540" height="540" id="canvas"></canvas>
+    </section>
+    <div class="inputtext" style="width:600px; margin:0 auto;">
+        <label for="inputed">輸入客製化文字：
+            <textarea name="inputed" maxlength="6" id="inputed" placeholder="限輸6字"></textarea>
+            <!-- 提供使用者輸入文字欄-->
+        </label>
+        <br>
+    </div>
+
+
+
+    <script>
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.font = '20px "Arial"';
+    ctx.fillText("Click here to start fill with Facebook Profile Picture", 40, 270);
+    var img = new Image(); // load img
+    img.src = "img/overlay.png";
+    var img2 = new Image();
+    img2.src = "img/overlayback.png"
+    var img3 = new Image();
+    img3.src = "img/typography.png"
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var canvasOffset = $("#canvas").offset();
+	//console.log(canvasOffset);
+    var offsetX = canvasOffset.left;
+	console.log(offsetX);
+
+    var offsetY = canvasOffset.top;
+	console.log(offsetY);
+
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    var isDragging = false;
+
+    function handleMouseDown(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // set the drag flag
+        isDragging = true;
+    }
+
+    function handleMouseUp(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // clear the drag flag
+        isDragging = false;
+    }
+
+    function handleMouseOut(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+        // user has left the canvas, so clear the drag flag
+        //isDragging=false;
+    }
+
+    function handleMouseMove(e) {
+        canMouseX = parseInt(e.clientX - offsetX);
+        canMouseY = parseInt(e.clientY - offsetY);
+		console.log(canMouseX);
+        // if the drag flag is set, clear the canvas and draw the image
+        if (isDragging) {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            //var profileIMG = document.getElementById("preview1");
+            //canvas.width = profileIMG.width;
+            //canvas.height = profileIMG.height;
+            //ctx.drawImage(profileIMG,0,0);
+            ctx.drawImage(img3, canMouseX - 128 / 2, canMouseY - 120 / 2);
+            ctx.drawImage(img2, 0, 0);
+            var inputedText = $('#inputed').val();
+            ctx.fillStyle = "black";
+            ctx.font = '20px "微軟正黑體"';
+            ctx.fillText(inputedText, canMouseX - 1 / 2, canMouseY - 30 / 2);
+        }
+    }
+
+    $("#canvas").mousedown(function (e) {
+        handleMouseDown(e);
+    });
+    $("#canvas").mousemove(function (e) {
+        handleMouseMove(e);
+    });
+    $("#canvas").mouseup(function (e) {
+        handleMouseUp(e);
+    });
+    $("#canvas").mouseout(function (e) {
+        handleMouseOut(e);
+    });
+    </script>
+</body>
+
+</html>
+

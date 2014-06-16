@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>HTML5 Canvas & facebook</title>
+    <meta name="description" content=" ">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<style>
+    #canvas {border: 3px solid grey;}
+    </style>
+</head>
+
+<body>
+    <section id="main">
+        <h2>This is a HTML5 Canvas Pages with Facebook</h2>
+        <canvas width="540" height="540" id="canvas"></canvas>
+    </section>
+    <div class="inputtext" style="width:600px; margin:0 auto;">
+        <label for="inputed">輸入客製化文字：
+            <textarea name="inputed" maxlength="6" id="inputed" placeholder="限輸6字"></textarea><!-- 提供使用者輸入文字欄-->
+        </label>
+        <br>
+        <button id="sentimg" onClick="PostImageToFacebook()">Post to Facebook</button><!-- 傳送按鈕-->
+    </div>
+    <div class="info"></div><!-- 訊息欄位-->
+
+    
+
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+</html>
+
+
