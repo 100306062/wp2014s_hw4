@@ -19,14 +19,39 @@
 <body>
     <section id="main">
         <h2>This is a HTML5 Canvas Pages with Facebook</h2>
+        
+         <button id="albumGET" onClick="getAlbum()">Get album</button>
+            <label for='album'>Album :
+                <select name="album" id="album" title="album"></select><br>
+                <select name="photo" id="photo" title="photo"></select><br>
+            </label>
+               
+        
         <canvas width="540" height="540" id="canvas"></canvas>
+        
+         <label for='pattern'>Select Pattern:
+            <select name="pattern" id="pattern" title="pattern">
+                <option value="img/overlayback.png">Overlay1</option>
+                <option value="img/overlay2.png">Overlay2</option>
+            </select>
+            </label>
+            <div id="photoContainer"></div>
+        
+        
     </section>
     <div class="inputtext" style="width:600px; margin:0 auto;">
+        <label for="input">上傳其他圖層：
+            <input type="file" id="input" />
+        </label> <span style="font-size:10px">*建議大小：560x560</span>
+        <br>
+              
+        
         <label for="inputed">輸入客製化文字：
             <textarea name="inputed" maxlength="6" id="inputed" placeholder="限輸6字"></textarea><!-- 提供使用者輸入文字欄-->
         </label>
         <br>
         <button id="sentimg" onClick="PostImageToFacebook()">Post to Facebook</button><!-- 傳送按鈕-->
+        <input type="button" value="Reload" onClick="refreshPages()">
     </div>
     <div class="info"></div><!-- 訊息欄位-->
 
