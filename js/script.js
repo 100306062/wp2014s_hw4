@@ -4,23 +4,55 @@ window.fbAsyncInit = function(){
 		xfbml	: true,
 		version	:'v2.0'
 		});
+
+function FacebookLogin() {
+    FB.login(function (e) {
+        if (e.authResponse) {
+            window.authToken = e.authResponse.accessToken;
+            window.location.reload()
+        }
+    }, {
+        scope: "user_likes,user_photos,publish_actions"
+    })
+}
+
+function refreshPages() {
+    window.location.reload()
+}
+
+function getAlbum() {
+    $("#albumGET").remove();
+    FB.api("/me/albums", function (e) {
+        for (var t = 0; t < e.data.length; t++) {
+            var n = e.data[t].id;
+            var r = e.data[t].name;
+            var i = '<option id="albumID" value=' + n + ">" + r + "</option>";
+            $("#album").append(i);
+            $("#album").prop("selectedIndex", -1)
+        }
+    })
+}
+
+
+
+//LOAD FACEBOOK SDK ASYNC，這是基本的東西，應該不用多說了吧
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js"; 
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 	
 	
-	(function(d,s,id){
-		var js, fjs = d.getElementByTagName(s)[0];
-		if(d.getElementById(id)){return;}
-		js =d.creatElement(s); js.id = id;
-		js.src = "//connect.facebook.net/en_US/sdk.js";
-		fjs.src.parentNode.insertBefore(js,fjs);
-		}(document, 'script', 'facebook-jssdk'));
-
-
-
-FB.getLoginStatus(function(response) {
-  if (response.status === 'connected') {
+FB.getLoginStatus(function(e) {
+  if (e.status === 'connected') {
     //呼叫api把圖片放到#preview IMG tag 內
     window.authToken = e.authResponse.accessToken
-  } else if (response.status === 'not_authorized') {
+  } else if (e.status === 'not_authorized') {
     //要求使用者登入，索取publish_actions權限
 	 $("#main").html("<h1>Please authorized this apps</h1><h4> p/s: please allow browser popup for this website and refresh to use this apps</h4>");
      $("#facebookname,#sentimg,label").remove();
@@ -37,6 +69,54 @@ FB.getLoginStatus(function(response) {
  $("#pattern").prop("selectedIndex", -1)
 
 };
+
+
+(function (e, t, n) {
+    var r, i = e.getElementsByTagName(t)[0];
+    if (e.getElementById(n)) {
+        return
+    }
+    r = e.createElement(t);
+    r.id = n;
+    r.src = "//connect.facebook.net/en_US/all.js";
+    i.parentNode.insertBefore(r, i)
+})(document, "script", "facebook-jssdk");
+$("#album").change(function () {
+    $("#photoContainer").html("");
+    $("#photo").html("");
+    console.log("test");
+    var e = this.options[this.selectedIndex].value;
+    var t = e + "/photos";
+    FB.api(t, function (e) {
+        for (var t = 0; t < e.data.length; t++) {
+            var n = e.data[t].id;
+            var r = e.data[t].name;
+            var i = '<option id="photoID" value=' + n + ">" + r + "</option>";
+            $("#photo").append(i);
+            $("#photo").prop("selectedIndex", -1)
+        }
+    })
+});
+$("#photo").change(function () {
+    $("#photoContainer").html("");
+    var e = this.options[this.selectedIndex].value;
+    FB.api(e, function (e) {
+        var t = e.images[0].source;
+        var n = e.name;
+        var r = e.likes;
+        if (r != null) {
+            var i = e.likes.data.length
+        } else {
+            i = "0"
+        }
+        var s = "<strong>Get " + i + ' like </strong><br><figure><img style="display:hidden; width:0; height:0;" crossorigin="anonymous" id="albumPhoto" src="' + t + '" alt="' + n + '" ><figcaption>' + n + "</figcaption></figure>";
+        $("#photoContainer").html(s)
+    })
+});
+
+
+
+
 //以下為canvas的程式碼，基本上不需多動，依據comments修改即可
 	
 	//起始畫面
@@ -117,50 +197,16 @@ FB.getLoginStatus(function(response) {
 
  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
 
-
-function FacebookLogin() {
-    FB.login(function (e) {
-        if (e.authResponse) {
-            window.authToken = e.authResponse.accessToken;
-            window.location.reload()
-        }
-    }, {
-        scope: "user_likes,user_photos,publish_actions"
-    })
+function handleFiles(e) {
+    var t = document.getElementById("canvas").getContext("2d");
+    var n = URL.createObjectURL(e.target.files[0]);
+    var r = new Image;
+    r.onload = function () {
+        t.drawImage(r, 270 / 2, 270 / 2)
+    };
+    r.src = n;
+    $("#canvas").css("pointer-events", "none")
 }
-
-function refreshPages() {
-    window.location.reload()
-}
-
-function getAlbum() {
-    $("#albumGET").remove();
-    FB.api("/me/albums", function (e) {
-        for (var t = 0; t < e.data.length; t++) {
-            var n = e.data[t].id;
-            var r = e.data[t].name;
-            var i = '<option id="albumID" value=' + n + ">" + r + "</option>";
-            $("#album").append(i);
-            $("#album").prop("selectedIndex", -1)
-        }
-    })
-}
-
-
-
-//LOAD FACEBOOK SDK ASYNC，這是基本的東西，應該不用多說了吧
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {
-        return;
-    }
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js"; 
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-
 
 
 
