@@ -1,4 +1,4 @@
-
+/*
 		
 function FacebookLogin() {
     FB.login(function (e) {
@@ -264,6 +264,9 @@ window.fbAsyncInit = function () {
     r.src = "//connect.facebook.net/en_US/all.js";
     i.parentNode.insertBefore(r, i)
 })(document, "script", "facebook-jssdk");
+
+
+
 $("#album").change(function () {
     $("#photoContainer").html("");
     $("#photo").html("");
@@ -355,6 +358,7 @@ window.onload = function () {
     var e = document.getElementById("input");
     e.addEventListener("change", handleFiles, false)
 }		
+*/		
 		
 		
 		
@@ -367,8 +371,7 @@ window.onload = function () {
 		
 		
 		
-		
-/*
+
 
 window.fbAsyncInit = function(){
 	FB.init({
@@ -639,7 +642,7 @@ function dataURItoBlob(dataURI) {
     });
 }
 
-*/
+
 
 
 
