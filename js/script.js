@@ -1,5 +1,3 @@
-/*
-		
 function FacebookLogin() {
     FB.login(function (e) {
         if (e.authResponse) {
@@ -358,7 +356,7 @@ window.onload = function () {
     var e = document.getElementById("input");
     e.addEventListener("change", handleFiles, false)
 }		
-*/		
+		
 		
 		
 		
@@ -372,7 +370,7 @@ window.onload = function () {
 		
 		
 
-
+/*
 window.fbAsyncInit = function(){
 	FB.init({
 		appId	:'731179130279928',
@@ -641,7 +639,7 @@ function dataURItoBlob(dataURI) {
         type: 'image/png'
     });
 }
-
+*/
 
 
 
